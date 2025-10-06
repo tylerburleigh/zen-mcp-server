@@ -1,0 +1,33 @@
+{
+  "tools": {
+    "allowed": [
+      "run_shell_command(ls)",
+      "run_shell_command(grep)",
+      "run_shell_command(awk)",
+      "run_shell_command(sed)",
+      "run_shell_command(find)",
+      "run_shell_command(cat)",
+      "run_shell_command(head)",
+      "run_shell_command(tail)",
+      "run_shell_command(wc)",
+      "run_shell_command(sort)",
+      "run_shell_command(uniq)",
+      "run_shell_command(cut)",
+      "run_shell_command(pytest)",
+      "read_file",
+      "search_files",
+      "list_directory",
+      "google_web_search",
+      "web_fetch"
+    ]
+  },
+  "ide": {
+    "hasSeenNudge": true,
+    "enabled": true
+  },
+  "security": {
+    "auth": {
+      "selectedType": "gemini-api-key"
+    }
+  }
+}

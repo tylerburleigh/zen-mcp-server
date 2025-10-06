@@ -3,8 +3,7 @@
   "command": "gemini",
   "additional_args": [
     "--telemetry",
-    "false",
-    "--yolo"
+    "false"
   ],
   "env": {},
   "roles": {

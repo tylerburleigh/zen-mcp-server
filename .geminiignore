@@ -1,0 +1,40 @@
+# Sensitive files - exclude from Gemini CLI access
+.env*
+*.key
+*.pem
+*.p12
+*.pfx
+id_rsa*
+**/credentials*
+
+# Python virtual environments
+venv/
+.venv/
+env/
+.env/
+__pycache__/
+*.pyc
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# Logs (except when explicitly needed)
+*.log
+
+# Testing artifacts
+.pytest_cache/
+.coverage
+htmlcov/
