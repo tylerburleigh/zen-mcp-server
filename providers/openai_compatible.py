@@ -356,11 +356,12 @@ class OpenAICompatibleProvider(ModelProvider):
 
         return sanitized
 
-    def _safe_extract_output_text(self, response) -> str:
-        """Safely extract output_text from o3-pro response with validation.
+    def _safe_extract_output_text(self, response, model_name: str = "model") -> str:
+        """Safely extract output_text from responses API response with validation.
 
         Args:
             response: Response object from OpenAI SDK
+            model_name: Name of the model for error messages
 
         Returns:
             str: The output text content
@@ -372,16 +373,16 @@ class OpenAICompatibleProvider(ModelProvider):
         logging.debug(f"Response attributes: {dir(response)}")
 
         if not hasattr(response, "output_text"):
-            raise ValueError(f"o3-pro response missing output_text field. Response type: {type(response).__name__}")
+            raise ValueError(f"{model_name} response missing output_text field. Response type: {type(response).__name__}")
 
         content = response.output_text
         logging.debug(f"Extracted output_text: '{content}' (type: {type(content)})")
 
         if content is None:
-            raise ValueError("o3-pro returned None for output_text")
+            raise ValueError(f"{model_name} returned None for output_text")
 
         if not isinstance(content, str):
-            raise ValueError(f"o3-pro output_text is not a string. Got type: {type(content).__name__}")
+            raise ValueError(f"{model_name} output_text is not a string. Got type: {type(content).__name__}")
 
         return content
 
@@ -394,7 +395,7 @@ class OpenAICompatibleProvider(ModelProvider):
         capabilities: Optional[ModelCapabilities] = None,
         **kwargs,
     ) -> ModelResponse:
-        """Generate content using the /v1/responses endpoint for reasoning models."""
+        """Generate content using the /v1/responses endpoint via OpenAI library."""
         # Convert messages to the correct format for responses endpoint
         input_messages = []
 
@@ -403,7 +404,7 @@ class OpenAICompatibleProvider(ModelProvider):
             content = message.get("content", "")
 
             if role == "system":
-                # For o3-pro, system messages should be handled carefully to avoid policy violations
+                # System messages should be handled carefully to avoid policy violations
                 # Instead of prefixing with "System:", we'll include the system content naturally
                 input_messages.append({"role": "user", "content": [{"type": "input_text", "text": content}]})
             elif role == "user":
@@ -442,12 +443,12 @@ class OpenAICompatibleProvider(ModelProvider):
 
             sanitized_params = self._sanitize_for_logging(completion_params)
             logging.info(
-                f"o3-pro API request (sanitized): {json.dumps(sanitized_params, indent=2, ensure_ascii=False)}"
+                f"{model_name} responses API request (sanitized): {json.dumps(sanitized_params, indent=2, ensure_ascii=False)}"
             )
 
             response = self.client.responses.create(**completion_params)
 
-            content = self._safe_extract_output_text(response)
+            content = self._safe_extract_output_text(response, model_name)
 
             usage = None
             if hasattr(response, "usage"):
@@ -480,11 +481,11 @@ class OpenAICompatibleProvider(ModelProvider):
                 operation=_attempt,
                 max_attempts=max_retries,
                 delays=retry_delays,
-                log_prefix="responses endpoint",
+                log_prefix=f"{model_name} responses endpoint",
             )
         except Exception as exc:
             attempts = max(attempt_counter["value"], 1)
-            error_msg = f"responses endpoint error after {attempts} attempt{'s' if attempts > 1 else ''}: {exc}"
+            error_msg = f"{model_name} responses endpoint error after {attempts} attempt{'s' if attempts > 1 else ''}: {exc}"
             logging.error(error_msg)
             raise RuntimeError(error_msg) from exc
 
