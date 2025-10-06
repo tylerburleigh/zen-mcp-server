@@ -139,10 +139,20 @@ class ModelProviderRegistry:
                 azure_endpoint=azure_endpoint,
                 api_version=azure_version,
             )
+        elif provider_type == ProviderType.OPENAI:
+            # For OpenAI, check if custom base URL is configured
+            if not api_key:
+                return None
+            openai_base_url = get_env("OPENAI_BASE_URL")
+            provider_kwargs = {"api_key": api_key}
+            if openai_base_url:
+                provider_kwargs["base_url"] = openai_base_url
+                logging.info(f"Initialized OpenAI provider with custom endpoint: {openai_base_url}")
+            provider = provider_class(**provider_kwargs)
         else:
             if not api_key:
                 return None
-            # Initialize non-custom provider with just API key
+            # Initialize other providers with just API key
             provider = provider_class(api_key=api_key)
 
         # Cache the instance
