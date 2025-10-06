@@ -38,6 +38,7 @@ INTERNAL_DEFAULTS: dict[str, CLIInternalDefaults] = {
         additional_args=["exec"],
         default_role_prompt="systemprompts/clink/default.txt",
         runner="codex",
+    ),
     "cursor-agent": CLIInternalDefaults(
         parser="cursor_json",
         additional_args=["--print", "--output-format", "json"],
