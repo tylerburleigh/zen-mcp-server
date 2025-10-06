@@ -1,0 +1,59 @@
+{
+  "permissions": {
+    "allow": [
+      "Shell(ls)",
+      "Shell(grep)",
+      "Shell(awk)",
+      "Shell(sed)",
+      "Shell(find)",
+      "Shell(cat)",
+      "Shell(head)",
+      "Shell(tail)",
+      "Shell(wc)",
+      "Shell(sort)",
+      "Shell(uniq)",
+      "Shell(cut)",
+      "Shell(pytest)",
+      "Read(**/*.py)",
+      "Read(**/*.json)",
+      "Read(**/*.md)",
+      "Read(**/*.txt)",
+      "Read(**/*.sh)",
+      "Read(**/*.yml)",
+      "Read(**/*.yaml)",
+      "Read(**/*.toml)",
+      "Read(**/*.cfg)",
+      "Read(**/*.ini)",
+      "Read(**/*.log)",
+      "Read(**/Makefile)",
+      "Read(**/Dockerfile)"
+    ],
+    "deny": [
+      "Shell(rm)",
+      "Shell(sudo)",
+      "Shell(chmod)",
+      "Shell(chown)",
+      "Read(.env*)",
+      "Read(**/*.key)",
+      "Read(**/*.pem)",
+      "Read(**/*.p12)",
+      "Read(**/*.pfx)",
+      "Read(**/id_rsa*)",
+      "Read(**/credentials*)",
+      "Write(**/*.env)",
+      "Write(**/*.key)",
+      "Write(**/*.pem)"
+    ]
+  },
+  "version": 1,
+  "editor": {
+    "vimMode": false
+  },
+  "model": {
+    "modelId": "gpt-5",
+    "displayModelId": "gpt-5",
+    "displayName": "GPT-5",
+    "displayNameShort": "GPT-5",
+    "aliases": []
+  }
+}

@@ -4,11 +4,13 @@ from __future__ import annotations
 
 from .base import BaseParser, ParsedCLIResponse, ParserError
 from .codex import CodexJSONLParser
+from .cursor_agent import CursorAgentJSONParser
 from .gemini import GeminiJSONParser
 
 _PARSER_CLASSES: dict[str, type[BaseParser]] = {
     CodexJSONLParser.name: CodexJSONLParser,
     GeminiJSONParser.name: GeminiJSONParser,
+    CursorAgentJSONParser.name: CursorAgentJSONParser,
 }
 
 

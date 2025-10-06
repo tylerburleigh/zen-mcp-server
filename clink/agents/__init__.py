@@ -6,11 +6,13 @@ from clink.models import ResolvedCLIClient
 
 from .base import AgentOutput, BaseCLIAgent, CLIAgentError
 from .codex import CodexAgent
+from .cursor_agent import CursorAgentAgent
 from .gemini import GeminiAgent
 
 _AGENTS: dict[str, type[BaseCLIAgent]] = {
     "gemini": GeminiAgent,
     "codex": CodexAgent,
+    "cursor-agent": CursorAgentAgent,
 }
 
 
